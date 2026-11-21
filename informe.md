@@ -14,7 +14,7 @@ Informe técnico de la prueba parcial de Computación Numérica (INF-321), Unive
 | Docentes | Juan Manuel Cabezas Contardo · Pedro Pesante |
 | Unidad | Sistemas de ecuaciones lineales: eliminación gaussiana y error de redondeo |
 | Fecha | Talca, noviembre de 2026 |
-| Repositorio | `cn-parcial-gauss12-hoces-torres` (rama evaluada: `main`; rama de pruebas: `pruebas`) |
+| Repositorio | `cn-parcial-gauss12-hoces-torres` (ramas: `main` evaluada, `rosario`, `marcos` y `pruebas`) |
 | Ejecución | `python src/main.py` (reproduce íntegramente `resultados/`) |
 
 **Enlace al repositorio:** https://github.com/rosha943/cn-parcial-gauss12-hoces-torres/tree/main
@@ -140,7 +140,7 @@ Las tres corridas usan **el mismo código** (`eliminar` en `src/gauss.py`, con e
 
 ### Por qué el pivote a(1,1) es inaceptable
 
-Sin pivoteo, el primer paso divide por a(1,1) = 1,3407×10⁻⁸: el multiplicador de esa primera fila ya es 8,89×10¹¹ y el multiplicador máximo de toda la corrida llega a 2,75×10¹³, mientras que la matriz **crece** 2,64×10³ veces respecto de su mayor elemento inicial. El mecanismo es el siguiente: al calcular `a(i,j) − m·a(k,j)` con `m` de orden 10¹³, el producto `m·a(k,j)` tiene un exponente muy superior al del operando `a(i,j)`; el operando pequeño, que contiene la información de esa fila, queda desplazado más allá de los 53 bits de mantisa y desaparece. La consecuencia no es sólo un error de redondeo acumulativo: es **pérdida de información estructural**. Los 11,37 bits de crecimiento y los 2,93 bits promedio perdidos por cancelación (15,26 en el peor caso) se traduction en 4 dígitos de diferencia frente a la corrida con pivoteo escalado (7 frente a 11 dígitos correctos).
+Sin pivoteo, el primer paso divide por a(1,1) = 1,3407×10⁻⁸: el multiplicador de esa primera fila ya es 8,89×10¹¹ y el multiplicador máximo de toda la corrida llega a 2,75×10¹³, mientras que la matriz **crece** 2,64×10³ veces respecto de su mayor elemento inicial. El mecanismo es el siguiente: al calcular `a(i,j) − m·a(k,j)` con `m` de orden 10¹³, el producto `m·a(k,j)` tiene un exponente muy superior al del operando `a(i,j)`; el operando pequeño, que contiene la información de esa fila, queda desplazado más allá de los 53 bits de mantisa y desaparece. La consecuencia no es sólo un error de redondeo acumulativo: es **pérdida de información estructural**. Los 11,37 bits de crecimiento y los 2,93 bits promedio perdidos por cancelación (15,26 en el peor caso) se traducen en 4 dígitos de diferencia frente a la corrida con pivoteo escalado (7 frente a 11 dígitos correctos).
 
 ### Por qué el pivoteo escalado y no el parcial "a secas"
 
@@ -198,7 +198,7 @@ Solución de la corrida declarada (pivoteo parcial escalado). La columna "dígit
 
 **Criterio de reporte.** Se reportan los 17 dígitos que aporta la doble precisión **y** se afirma explícitamente cuántos de ellos son correctos (11 a 15). Reportar más dígitos de los defendibles se penaliza igual que reportar menos, por lo que el informe separa deliberadamente las dos cosas: la tabla anterior es el resultado con todos los dígitos disponibles, y la columna central es el compromiso defendible ante la defensa oral.
 
-El número de dígitoscorrectos por incógnita en las otras corridas (comparación completa en `resultados/solucion.csv`):
+El número de dígitos correctos por incógnita en las otras corridas (comparación completa en `resultados/solucion.csv`):
 
 | i | sin pivoteo | parcial | escalado |
 |---:|---:|---:|---:|
@@ -336,4 +336,4 @@ Se usó el asistente OpenCode para revisar la redacción, la estructura del info
 
 ---
 
-*Documento generado como parte de la entrega de la prueba parcial INF-321. Los resultados numéricos de este informe son reproducibles ejecutando `python src/main.py` en el repositorio `cn-parcial-gauss12-hoces`.*
+*Documento generado como parte de la entrega de la prueba parcial INF-321. Los resultados numéricos de este informe son reproducibles ejecutando `python src/main.py` en el repositorio `cn-parcial-gauss12-hoces-torres`.*
