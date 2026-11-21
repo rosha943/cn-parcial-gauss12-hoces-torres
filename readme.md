@@ -83,3 +83,5 @@ El análisis completo (planteamiento, estrategia, conteo de operaciones, mantisa
 ## Licencia y nota de uso académico
 
 Trabajo académico de la prueba parcial de Computación Numérica (INF-321) de la Universidad Católica del Maule. Uso exclusivamente educativo y de evaluación.
+
+Responsable de la documentación y la publicación: Rosario Torres.
