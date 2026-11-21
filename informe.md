@@ -19,6 +19,8 @@ Informe técnico de la prueba parcial de Computación Numérica (INF-321), Unive
 
 **Enlace al repositorio:** https://github.com/rosha943/cn-parcial-gauss12-hoces-torres/tree/main
 
+Aportación de Marcos Hoces: implementación de la eliminación gaussiana, conteo de flops y análisis numérico.
+
 ---
 
 ## Planteamiento
