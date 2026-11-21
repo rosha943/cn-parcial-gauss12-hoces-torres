@@ -4,31 +4,24 @@ Informe técnico de la prueba parcial de Computación Numérica (INF-321), Unive
 
 ---
 
-## 3. Identificación
+## Identificación
 
 | Campo | Detalle |
 |---|---|
-| Estudiante | Marcos Hoces |
+| Estudiantes | Rosario Torres, Marcos Hoces |
 | Asignatura | Computación Numérica (INF-321) |
 | Carrera | Ingeniería Civil Informática |
 | Docentes | Juan Manuel Cabezas Contardo · Pedro Pesante |
 | Unidad | Sistemas de ecuaciones lineales: eliminación gaussiana y error de redondeo |
 | Fecha | Talca, noviembre de 2026 |
-| Repositorio | `cn-parcial-gauss12-hoces` (rama evaluada: `main`; rama de pruebas: `pruebas`) |
+| Repositorio | `cn-parcial-gauss12-hoces-torres` (rama evaluada: `main`; rama de pruebas: `pruebas`) |
 | Ejecución | `python src/main.py` (reproduce íntegramente `resultados/`) |
 
-**Enlace al repositorio.** El proyecto está en el directorio local `D:\cn-parcial-gauss12-hoces`, con su propio repositorio Git (rama `main` como rama evaluada y rama `pruebas` con el comparativo experimental). Para publicarlo y entregar el enlace:
-
-```powershell
-cd D:\cn-parcial-gauss12-hoces
-git remote add origin https://github.com/Marcoletas-01/cn-parcial-gauss12-hoces.git
-git push -u origin main
-git push -u origin pruebas
-```
+**Enlace al repositorio:** https://github.com/rosha943/cn-parcial-gauss12-hoces-torres/tree/main
 
 ---
 
-## 4. Planteamiento
+## Planteamiento
 
 Se resuelve el sistema denso
 
@@ -67,7 +60,7 @@ y, en la dirección inversa, $F_5 \approx -7{,}16\times10^{-3}F_3 + 1{,}71\times
 
 ---
 
-## 5. Estrategia de eliminación
+## Estrategia de eliminación
 
 La estrategia declarada es la **eliminación gaussiana con pivoteo parcial escalado por filas**, con una única factorización LU y reutilización de los multiplicadores.
 
@@ -85,7 +78,7 @@ La estrategia declarada es la **eliminación gaussiana con pivoteo parcial escal
 
 ---
 
-## 6. Conteo de operaciones
+## Conteo de operaciones
 
 **Convención declarada.** 1 flop = 1 operación aritmética elemental (multiplicación, división, suma o resta). La anulación explícita de la subdiagonal (66 asignaciones), las comparaciones de la búsqueda de pivote y los intercambios de fila **no son operaciones aritméticas** y se contabilizan aparte, como sobrecosto de estabilidad, tal como pide la pauta. Todos los números provienen del contador instrumentado en `src/conteo.py` (clase `Contador`), que se invoca desde el propio bucle de eliminación; no hay ninguna fórmula escrita a mano.
 
@@ -126,7 +119,7 @@ El sobrecosto de 638 comparaciones del pivoteo escalado proviene de recalcular e
 
 ---
 
-## 7. Análisis de mantisa y pivoteo
+## Análisis de mantisa y pivoteo
 
 Las tres corridas usan **el mismo código** (`eliminar` en `src/gauss.py`, con el parámetro `pivote`), la misma matriz y el mismo lado derecho:
 
@@ -159,7 +152,7 @@ Ninguna de estas protecciones es gratis: el pivoteo agrega 638 comparaciones y 7
 
 ---
 
-## 8. Condicionamiento
+## Condicionamiento
 
 El condicionamiento se estimó por dos vías independientes:
 
@@ -182,7 +175,7 @@ es decir, la cota clásica **no garantiza ni siquiera dos dígitos correctos**.
 
 ---
 
-## 9. Resultados
+## Resultados
 
 Solución de la corrida declarada (pivoteo parcial escalado). La columna "dígitos afirmados" es el número de dígitos significativos correctos, obtenido comparando con la solución verdadera (§10) mediante `floor(−log₁₀(error relativo))`.
 
@@ -225,9 +218,9 @@ Las tres corridas coinciden con los rangos que anticipa el enunciado (9 a 12 dí
 
 ---
 
-## 10. Verificación
+## Verificación
 
-### 10.1 Residuo en precisión extendida
+### Residuo en precisión extendida
 
 El residuo `r = b − A x` se calcula con `decimal` (80 dígitos de precisión). Los datos de entrada se leen como **cadenas** y se convierten a `Decimal`, de modo que A y b conservan todos sus dígitos; la solución en doble precisión se convierte a `Decimal` de forma **exacta** (su representación binaria), con lo que el residuo mide el error real y no un redondeo artificial.
 
@@ -237,7 +230,7 @@ El residuo `r = b − A x` se calcula con `decimal` (80 dígitos de precisión).
 | Pivoteo parcial | 5,372954×10⁻¹⁰ | 6,881421×10⁻¹⁶ | 3,492460×10⁻¹⁰ |
 | Pivoteo parcial escalado | 9,712630×10⁻¹⁰ | 1,243947×10⁻¹⁵ | 1,164153×10⁻⁹ |
 
-### 10.2 Solución de referencia y solución verdadera
+### Solución de referencia y solución verdadera
 
 * La **referencia** se resuelve con eliminación gaussiana en `Decimal` a 80 dígitos: su residuo es 2,0×10⁻⁷⁴, es decir, la aritmética extendida resuelve el sistema sin error apreciable.
 * Redondeando la referencia a 10 decimales se obtiene un vector `x*` tal que **A x* = b con residuo exactamente nulo** en aritmética decimal: el enunciado construyó `b` con aritmética racional exacta a partir de la solución verdadera, y esa solución es
@@ -249,7 +242,7 @@ x* = (0,7384915627, −1,2059374168, 0,0043871952, −0,0917264538, 2,8461093725
 
 Esta comprobación (residuo 0 exacto, no 10⁻¹⁵) es la que da valor a la columna "dígitos afirmados" de §9: los dígitos se cuentan contra la verdad, no contra otra aproximación.
 
-### 10.3 Refinamiento iterativo
+### Refinamiento iterativo
 
 El refinamiento usa el residuo en precisión extendida y resuelve la corrección `A d = r` **con los factores L y U ya calculados** (sin volver a triangularizar). Trayectoria de la corrida declarada:
 
@@ -264,7 +257,7 @@ El refinamiento usa el residuo en precisión extendida y resuelve la corrección
 
 La misma mejora se observa en las otras dos corridas (7 → 16 dígitos sin pivoteo; 9 → 16 con pivoteo parcial), lo que confirma que el refinamiento con residuo extendido compensa la degradación del pivoteo.
 
-### 10.4 Control con biblioteca
+### Control con biblioteca
 
 Sólo como control, nunca como resolutora:
 
@@ -277,7 +270,7 @@ Sólo como control, nunca como resolutora:
 
 La diferencia relativa máxima frente a `numpy.linalg.solve` es 9,19×10⁻¹¹ y frente a `scipy.linalg.solve` es la misma (ambas bibliotecas internamente usan LAPACK con pivoteo parcial). Esa diferencia **es la medida de la incertidumbre del propio resultado**: es del orden de los 10–11 dígitos que se afirman en §9, y es del orden de lo esperado cuando κ·ε ≈ 6,8×10⁻³ es pesimista pero no despreciable.
 
-### 10.5 Análisis de casi dependencia
+### Análisis de casi dependencia
 
 | fila objetivo | filas combinadas | alfa | beta | error relativo |
 |---:|---|---:|---:|---:|
@@ -290,7 +283,7 @@ Las tres primeras tríadas son la misma relación: las filas 3, 5 y 7 están en 
 
 ---
 
-## 11. Conclusiones
+## Conclusiones
 
 **El compromiso elegido.** Se eligió **pivoteo parcial escalado por filas**, con una única factorización LU, multiplicadores calculados una vez por fila y reutilizados, y conteo instrumentado de 1354 flops aritméticos (−8,9 % respecto de la cota de 1486). La razón es que el pivoteo escalado es la única de las tres variantes comparadas que protege simultáneamente los dos objetivos: no excede el costo (los flops aritméticos son los mismos que sin pivoteo; el sobrecosto son 638 comparaciones, contabilizadas aparte) y entrega la mayor exactitud (11–15 dígitos correctos frente a 9–12 del parcial y 7–10 sin pivoteo). El costo real del pivoteo no está en las multiplicaciones, sino en el hecho de que obliga a **renunciar a reportar más dígitos de los defendibles**: el precio de la estabilidad es una mayor incertidumbre, y se paga en el número de dígitos afirmados.
 
@@ -300,7 +293,7 @@ Las tres primeras tríadas son la misma relación: las filas 3, 5 y 7 están en 
 
 ---
 
-## 12. Reproducibilidad
+## Reproducibilidad
 
 | Componente | Versión |
 |---|---|
@@ -325,6 +318,10 @@ El comando regenera **todos** los archivos de `resultados/` sin intervención ma
 | `resultados/residuo.txt` | residuo en precisión extendida, refinamiento iterativo, condicionamiento, análisis de casi dependencia y control con biblioteca |
 
 La ejecución es **determinista**: no hay números aleatorios en el camino de la solución (el único generador pseudoaleatorio, con semilla fija 20261116, se usa sólo para el punto de partida de los estimadores de valores singulares, y su resultado no afecta a la solución reportada).
+
+### Declaración de uso de asistentes de IA
+
+Se usó el asistente OpenCode para revisar la redacción, la estructura del informe y los comandos de publicación en Git. Los algoritmos, cálculos, ejecuciones y verificaciones fueron realizados y comprobados por Rosario Torres y Marcos Hoces. El asistente no sustituyó la implementación propia ni el análisis numérico.
 
 ### Fuentes consultadas
 

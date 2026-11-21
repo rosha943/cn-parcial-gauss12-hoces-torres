@@ -1,10 +1,10 @@
-# cn-parcial-gauss12-hoces
+# cn-parcial-gauss12-hoces-torres
 
 Resuelve el sistema lineal denso de 12 incógnitas por eliminación gaussiana con pivoteo parcial escalado, minimizando el costo operacional y acotando el error de redondeo de la mantisa.
 
 ## Autoría y asignatura
 
-**Marcos Hoces** · Computación Numérica (INF-321) · Ingeniería Civil Informática · Universidad Católica del Maule · noviembre de 2026.
+**Rosario Torres, Marcos Hoces** · Computación Numérica (INF-321) · Ingeniería Civil Informática · Universidad Católica del Maule · noviembre de 2026.
 
 Docentes: Juan Manuel Cabezas Contardo · Pedro Pesante.
 
@@ -35,7 +35,7 @@ El comando reproduce **todo** el contenido de `resultados/`, sin intervención m
 ## Estructura de carpetas
 
 ```
-cn-parcial-gauss12-hoces/
+cn-parcial-gauss12-hoces-torres/
 ├─ readme.md            # esta tarjeta: qué es y cómo se ejecuta
 ├─ informe.md           # informe técnico con el análisis de error (10 secciones)
 ├─ requirements.txt     # dependencias con versión fija
